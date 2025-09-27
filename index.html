@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AyurSutra - Hospital Administration Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">🏥</div>
+                <h1>AyurSutra</h1>
+                <span class="subtitle">Hospital Administration</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="active-patients">147</span>
+                    <span class="stat-label">Active Patients</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="today-appointments">23</span>
+                    <span class="stat-label">Today's Sessions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="available-therapists">8</span>
+                    <span class="stat-label">Available Staff</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="sync-status" id="sync-status">
+                    <div class="sync-indicator active"></div>
+                    <span>All Systems Online</span>
+                </div>
+                <button class="notification-btn" data-action="toggle-notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">4</span>
+                </button>
+                <div class="user-profile">
+                    <span>Dr. Admin</span>
+                    <div class="avatar">DA</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sidebar">
+        <div class="nav-items">
+            <button class="nav-item active" data-view="dashboard">
+                <i class="fas fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav-item" data-view="patient-registration">
+                <i class="fas fa-user-plus"></i>
+                <span>Patient Registration</span>
+            </button>
+            <button class="nav-item" data-view="patient-management">
+                <i class="fas fa-users-cog"></i>
+                <span>Patient Management</span>
+            </button>
+            <button class="nav-item" data-view="therapist-management">
+                <i class="fas fa-user-md"></i>
+                <span>Therapist Management</span>
+            </button>
+            <button class="nav-item" data-view="assignment-center">
+                <i class="fas fa-handshake"></i>
+                <span>Assignment Center</span>
+            </button>
+            <button class="nav-item" data-view="scheduling-hub">
+                <i class="fas fa-calendar-week"></i>
+                <span>Scheduling Hub</span>
+            </button>
+            <button class="nav-item" data-view="communication">
+                <i class="fas fa-comments"></i>
+                <span>Communication</span>
+            </button>
+            <button class="nav-item" data-view="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics & Reports</span>
+            </button>
+            <button class="nav-item" data-view="integration">
+                <i class="fas fa-link"></i>
+                <span>System Integration</span>
+            </button>
+        </div>
+        
+        <div class="quick-actions">
+            <button class="quick-action-btn emergency" data-action="emergency-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Emergency Alert</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view active">
+            <div class="view-header">
+                <h2>Hospital Operations Dashboard</h2>
+                <div class="quick-actions-header">
+                    <button class="btn btn--primary" data-action="add-patient">
+                        <i class="fas fa-plus"></i>
+                        New Patient
+                    </button>
+                    <button class="btn btn--secondary" data-action="emergency-assignment">
+                        <i class="fas fa-bolt"></i>
+                        Emergency Assignment
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="kpi-cards">
+                    <div class="kpi-card">
+                        <div class="kpi-icon patients">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">147</div>
+                            <div class="kpi-label">Total Patients</div>
+                            <div class="kpi-change positive">+5 today</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon therapists">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">12</div>
+                            <div class="kpi-label">Active Therapists</div>
+                            <div class="kpi-change neutral">8 available</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon sessions">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">23</div>
+                            <div class="kpi-label">Today's Sessions</div>
+                            <div class="kpi-change positive">94% completed</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon utilization">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">78%</div>
+                            <div class="kpi-label">Room Utilization</div>
+                            <div class="kpi-change positive">+3% vs yesterday</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity card">
+                    <div class="card-header">
+                        <h3>Recent Activity</h3>
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-list" id="activity-list">
+                            <!-- Activity items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="today-schedule card">
+                    <div class="card-header">
+                        <h3>Today's Schedule</h3>
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="schedule-list" id="schedule-list">
+                            <!-- Schedule items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pending-assignments card">
+                    <div class="card-header">
+                        <h3>Pending Assignments</h3>
+                        <span class="badge">4</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="assignment-alerts">
+                            <div class="alert-item">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>New patient Arjun Patel needs therapist assignment</span>
+                                <button class="btn btn--sm btn--primary" data-action="assign-therapist" data-patient="PT005">Assign</button>
+                            </div>
+                            <div class="alert-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Raghav Sharma session needs rescheduling</span>
+                                <button class="btn btn--sm btn--secondary" data-action="reschedule-session" data-patient="PT001">Reschedule</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Registration View -->
+        <div id="patient-registration-view" class="view">
+            <div class="view-header">
+                <h2>Patient Registration</h2>
+                <p class="view-subtitle">Complete Ayurvedic assessment and intake</p>
+            </div>
+
+            <form class="registration-form" id="patient-registration-form">
+                <div class="form-sections">
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Age *</label>
+                                <input type="number" class="form-control" min="1" max="120" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Gender *</label>
+                                <select class="form-control" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Ayurvedic Assessment</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Primary Dosha (Prakriti) *</label>
+                                <select class="form-control" required>
+                                    <option value="">Select Primary Dosha</option>
+                                    <option value="vata">Vata</option>
+                                    <option value="pitta">Pitta</option>
+                                    <option value="kapha">Kapha</option>
+                                    <option value="vata-pitta">Vata-Pitta</option>
+                                    <option value="vata-kapha">Vata-Kapha</option>
+                                    <option value="pitta-kapha">Pitta-Kapha</option>
+                                    <option value="tridosha">Tridosha</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Current Imbalance (Vikriti)</label>
+                                <select class="form-control">
+                                    <option value="">Select Current Imbalance</option>
+                                    <option value="vata">Vata Aggravation</option>
+                                    <option value="pitta">Pitta Aggravation</option>
+                                    <option value="kapha">Kapha Aggravation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Chief Complaints</label>
+                            <textarea class="form-control" rows="3" placeholder="Describe main health concerns and symptoms"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Treatment Requirements</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Recommended Therapy *</label>
+                                <select class="form-control" required>
+                                    <option value="">Select Therapy</option>
+                                    <option value="panchakarma-full">Panchakarma Full Course</option>
+                                    <option value="abhyanga-swedana">Abhyanga + Swedana</option>
+                                    <option value="virechana">Virechana</option>
+                                    <option value="basti">Basti Therapy</option>
+                                    <option value="nasya">Nasya</option>
+                                    <option value="consultation">Consultation Only</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Duration (Days)</label>
+                                <input type="number" class="form-control" min="1" max="60">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Special Instructions</label>
+                            <textarea class="form-control" rows="2" placeholder="Any special considerations or contraindications"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn--secondary" data-action="save-draft">Save as Draft</button>
+                    <button type="submit" class="btn btn--primary">Register Patient</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Patient Management View -->
+        <div id="patient-management-view" class="view">
+            <div class="view-header">
+                <h2>Patient Management</h2>
+                <div class="search-filters">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search patients..." id="patient-search">
+                    </div>
+                    <select class="form-control filter-select" id="status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="completing">Completing</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <select class="form-control filter-select" id="therapy-filter">
+                        <option value="">All Therapies</option>
+                        <option value="panchakarma">Panchakarma</option>
+                        <option value="abhyanga">Abhyanga</option>
+                        <option value="basti">Basti</option>
+                        <option value="virechana">Virechana</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="patients-table-container">
+                <table class="data-table" id="patients-table">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Prakriti</th>
+                            <th>Therapy</th>
+                            <th>Assigned Therapist</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Next Session</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patients-table-body">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Therapist Management View -->
+        <div id="therapist-management-view" class="view">
+            <div class="view-header">
+                <h2>Therapist Management</h2>
+                <button class="btn btn--primary" data-action="add-therapist">
+                    <i class="fas fa-plus"></i>
+                    Add New Therapist
+                </button>
+            </div>
+
+            <div class="therapists-grid" id="therapists-grid">
+                <!-- Therapist cards will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Assignment Center View -->
+        <div id="assignment-center-view" class="view">
+            <div class="view-header">
+                <h2>Assignment Center</h2>
+                <p class="view-subtitle">Drag and drop patients to assign therapists</p>
+            </div>
+
+            <div class="assignment-workspace">
+                <div class="unassigned-patients">
+                    <h3>Unassigned Patients</h3>
+                    <div class="patient-list" id="unassigned-patients">
+                        <!-- Unassigned patients will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="therapist-columns" id="therapist-columns">
+                    <!-- Therapist columns will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Scheduling Hub View -->
+        <div id="scheduling-hub-view" class="view">
+            <div class="view-header">
+                <h2>Scheduling Hub</h2>
+                <div class="calendar-controls">
+                    <button class="btn btn--secondary" data-action="prev-week">
+                        <i class="fas fa-chevron-left"></i>
+                        Previous Week
+                    </button>
+                    <h3 id="current-week">September 15-21, 2025</h3>
+                    <button class="btn btn--secondary" data-action="next-week">
+                        Next Week
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="weekly-calendar" id="weekly-calendar">
+                <!-- Calendar will be populated by JavaScript -->
+            </div>
+
+            <div class="room-utilization">
+                <h3>Room Utilization</h3>
+                <div class="rooms-grid" id="rooms-grid">
+                    <!-- Room status will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication View -->
+        <div id="communication-view" class="view">
+            <div class="view-header">
+                <h2>Communication Center</h2>
+                <button class="btn btn--primary" data-action="send-broadcast">
+                    <i class="fas fa-bullhorn"></i>
+                    Send Broadcast
+                </button>
+            </div>
+
+            <div class="communication-layout">
+                <div class="message-board card">
+                    <div class="card-header">
+                        <h3>Message Board</h3>
+                        <button class="btn btn--sm btn--secondary" data-action="new-announcement">
+                            <i class="fas fa-plus"></i>
+                            New Announcement
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="announcements-list" id="announcements-list">
+                            <!-- Announcements will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notifications-panel card">
+                    <div class="card-header">
+                        <h3>System Notifications</h3>
+                        <div class="notification-filters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="alerts">Alerts</button>
+                            <button class="filter-btn" data-filter="updates">Updates</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="notifications-list" id="notifications-list">
+                            <!-- Notifications will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics View -->
+        <div id="analytics-view" class="view">
+            <div class="view-header">
+                <h2>Analytics & Reports</h2>
+                <div class="report-controls">
+                    <select class="form-control" id="report-period">
+                        <option value="week">This Week</option>
+                        <option value="month" selected>This Month</option>
+                        <option value="quarter">This Quarter</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <button class="btn btn--secondary" data-action="export-report">
+                        <i class="fas fa-download"></i>
+                        Export Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="chart-container card" style="position: relative; height: 400px;">
+                    <div class="card-header">
+                        <h3>Treatment Outcomes</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="outcomesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container card" style="position: relative; height: 400px;">
+                    <div class="card-header">
+                        <h3>Patient Satisfaction</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="satisfactionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="metrics-summary card">
+                    <div class="card-header">
+                        <h3>Key Metrics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="metrics-list" id="metrics-list">
+                            <!-- Metrics will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration View -->
+        <div id="integration-view" class="view">
+            <div class="view-header">
+                <h2>System Integration</h2>
+                <p class="view-subtitle">Monitor and manage portal connections</p>
+            </div>
+
+            <div class="integration-status">
+                <div class="portal-status card">
+                    <div class="card-header">
+                        <h3>Patient Portal</h3>
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="connection-info">
+                            <div class="info-item">
+                                <span class="label">Status:</span>
+                                <span class="value success">Online</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Active Users:</span>
+                                <span class="value">89</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Last Sync:</span>
+                                <span class="value">2 minutes ago</span>
+                            </div>
+                        </div>
+                        <div class="portal-actions">
+                            <button class="btn btn--sm btn--secondary" data-action="sync-patient-portal">Force Sync</button>
+                            <button class="btn btn--sm btn--outline" data-action="view-patient-logs">View Logs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portal-status card">
+                    <div class="card-header">
+                        <h3>Therapist Portal</h3>
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="connection-info">
+                            <div class="info-item">
+                                <span class="label">Status:</span>
+                                <span class="value success">Online</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Active Users:</span>
+                                <span class="value">12</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Last Sync:</span>
+                                <span class="value">1 minute ago</span>
+                            </div>
+                        </div>
+                        <div class="portal-actions">
+                            <button class="btn btn--sm btn--secondary" data-action="sync-therapist-portal">Force Sync</button>
+                            <button class="btn btn--sm btn--outline" data-action="view-therapist-logs">View Logs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sync-logs card">
+                    <div class="card-header">
+                        <h3>Sync Activity</h3>
+                        <button class="btn btn--sm btn--secondary" data-action="refresh-logs">
+                            <i class="fas fa-refresh"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="logs-list" id="sync-logs">
+                            <!-- Sync logs will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Assignment Modal -->
+    <div id="assignment-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Assign Therapist</h3>
+                <button class="close-btn" data-action="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="assignment-form">
+                    <div class="patient-info">
+                        <h4 id="assignment-patient-name">Patient Name</h4>
+                        <p id="assignment-patient-details">Patient details</p>
+                    </div>
+                    <div class="therapist-selection">
+                        <label class="form-label">Select Therapist</label>
+                        <div class="therapist-options" id="therapist-options">
+                            <!-- Therapist options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--secondary" data-action="close-modal">Cancel</button>
+                <button class="btn btn--primary" data-action="confirm-assignment">Confirm Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
